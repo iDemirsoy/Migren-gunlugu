@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aura – Migren Günlüğü</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light dark;
+--act:color-mix(in srgb,var(--ac) 68%,var(--tx));--bg:#eaf1fa;--tx:#0b1530;--mut:#4b5b7c;--ac:#007fa8;--ac2:#5b3df5;--card:rgba(255,255,255,.72);--bd:rgba(20,40,90,.16);--nav:rgba(240,246,255,.94)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#060a19;--tx:#e8f0ff;--mut:#9fb0d3;--ac:#4fe3ff;--ac2:#9a7dff;--card:rgba(255,255,255,.06);--bd:rgba(150,180,255,.22);--nav:rgba(8,12,30,.94)}}
+:root[data-theme="dark"]{--bg:#060a19;--tx:#e8f0ff;--mut:#9fb0d3;--ac:#4fe3ff;--ac2:#9a7dff;--card:rgba(255,255,255,.06);--bd:rgba(150,180,255,.22);--nav:rgba(8,12,30,.94)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:radial-gradient(60rem 28rem at 85% -8%,color-mix(in srgb,var(--ac2) 30%,transparent),transparent),radial-gradient(48rem 26rem at -12% 18%,color-mix(in srgb,var(--ac) 22%,transparent),transparent),var(--bg);background-attachment:fixed;color:var(--tx);font:1rem/1.55 system-ui,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem;padding:.6rem 1rem;background:var(--nav);border-bottom:1px solid var(--bd);backdrop-filter:blur(14px)}
+.logo{font-size:22px;font-weight:800;letter-spacing:.02em;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo small{display:block;font-size:12px;font-weight:500;color:var(--mut);-webkit-text-fill-color:var(--mut)}
+.ctl{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--mut)}
+.ctl button{min-width:44px;height:44px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font-weight:800;font-size:18px;cursor:pointer}
+#zp{font-size:24px;border-color:var(--ac)}
+#zv{min-width:44px;text-align:center;font-weight:700;color:var(--tx)}
+main{max-width:42rem;margin:0 auto;padding:1rem 1rem 7.5rem}
+h2{font-size:1.6rem;margin:.4rem 0 .2rem}h3{font-size:1.1rem;margin:0 0 .6rem}
+.mut{color:var(--mut);margin:.2rem 0 1rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:1.2rem;padding:1rem;margin:0 0 .9rem;backdrop-filter:blur(10px)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{min-height:3rem;padding:.4rem 1.1rem;border-radius:2rem;border:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit;cursor:pointer}
+.chip.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-color:transparent;font-weight:700}
+.in{width:100%;min-height:3rem;padding:.4rem 1rem;border-radius:1rem;border:1px solid var(--bd);background:transparent;color:var(--tx);font:inherit}
+button:focus-visible,.in:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.cta,.ghost{display:block;width:100%;min-height:3.4rem;border-radius:1.2rem;font:inherit;font-weight:700;cursor:pointer;margin:0 0 .8rem}
+.cta{border:0;color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2))}
+.ghost{border:1px solid var(--bd);background:transparent;color:var(--tx)}
+.hero{display:flex;flex-direction:column;align-items:center;padding:1.2rem 0 .6rem}
+.orb{width:min(12rem,72vw);aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;color:#fff;font:inherit;font-size:1.35rem;font-weight:800;line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,.45);background:radial-gradient(circle at 30% 24%,rgba(255,255,255,.8),var(--ac) 36%,var(--ac2) 88%);box-shadow:0 0 0 .7rem color-mix(in srgb,var(--ac2) 18%,transparent),0 0 0 1.5rem color-mix(in srgb,var(--ac) 8%,transparent),0 0 3rem color-mix(in srgb,var(--ac) 55%,transparent);animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 1.1rem color-mix(in srgb,var(--ac2) 12%,transparent),0 0 0 2.2rem color-mix(in srgb,var(--ac) 5%,transparent),0 0 4.5rem color-mix(in srgb,var(--ac) 80%,transparent)}}
+.big{font-size:3rem;font-weight:800;line-height:1;color:var(--act)}
+.bar{height:.7rem;border-radius:1rem;background:var(--bd);overflow:hidden;margin:0 0 .8rem}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.row{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.row b{text-align:right}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;padding:.3rem .3rem calc(.3rem + env(safe-area-inset-bottom,0px));background:var(--nav);border-top:1px solid var(--bd);backdrop-filter:blur(14px)}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:.1rem;min-height:3.4rem;border:0;background:none;color:var(--mut);font:inherit;font-size:.72rem;cursor:pointer}
+nav button span{font-size:1.4rem;line-height:1.2}nav button.on{color:var(--act);font-weight:800}
+#toast{position:fixed;left:50%;bottom:6.5rem;z-index:9;transform:translate(-50%,1rem);opacity:0;padding:.7rem 1.2rem;border-radius:2rem;background:var(--ac2);color:#fff;font-weight:700;transition:.3s;pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.dot{width:3rem;height:3rem;border-radius:50%;border:3px solid transparent;cursor:pointer}.dot.on{border-color:var(--tx)}
+#th{display:inline-flex;align-items:center;justify-content:center}
+@media print{header,nav,button{display:none}}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">Aura<small>Migren Günlüğü</small></div>
+ <div class="ctl" role="group" aria-label="Yazı boyutu">Yazı boyutu
+  <button id="zm" aria-label="Yazıyı küçült">A−</button><span id="zv"></span><button id="zp" aria-label="Yazıyı büyüt">A+</button>
+  <button id="th" aria-label="Açık veya koyu tema">🌙</button>
+ </div>
+</header>
+<main id="view"></main>
+<nav>
+ <button data-t="home"><span>🏠</span>Bugün</button>
+ <button data-t="atak"><span>⚡</span>Atak</button>
+ <button data-t="uyku"><span>🌙</span>Uyku</button>
+ <button data-t="profil"><span>👤</span>Profil</button>
+ <button data-t="rapor"><span>📊</span>Rapor</button>
+</nav>
+<div id="toast" role="status"></div>
+<script>
+const $=s=>document.querySelector(s),K='aura-v1',Zs=[70,85,100,115,130,150,175,200],fresh=()=>({profile:{},attacks:[],sleep:[],weather:[],survey:{},si:0,loc:null,pal:0,st:{},hist:[]});
+let S=fresh(),zi=2,tab='home',dr={};
+const PQ=[
+{id:'yas',q:'Yaşınız kaç?',t:'num',ph:'örn. 34'},
+{id:'cins',q:'Cinsiyetiniz',t:'one',o:['Kadın','Erkek','Belirtmek istemiyorum']},
+{id:'kardes',q:'Kaç kardeşiniz var?',t:'num',ph:'0'},
+{id:'aile',q:'Ailenizde migren tanısı alan var mı?',t:'many',o:['Anne','Baba','Kardeş','Diğer akraba','Yok','Bilmiyorum']},
+{id:'tani',q:'Doktor size migren tanısı koydu mu?',t:'one',o:['Evet','Hayır','Emin değilim']},
+{id:'ilk',q:'İlk migren atağınız kaç yaşındaydı?',t:'num',ph:'örn. 15'},
+{id:'uyari',q:'Atak öncesinde uyarı belirtisi yaşar mısınız?',t:'one',o:['Evet','Bazen','Hayır']},
+{id:'aura',q:'Aura belirtileriniz',t:'many',o:['Işık çakmaları','Görme kaybı','Uyuşma veya karıncalanma','Konuşma güçlüğü','Yok']}];
+const AQ=[
+{id:'siddet',q:'Ağrı şiddeti (1 hafif, 10 çok şiddetli)',t:'scale',n:10},
+{id:'basla',q:'Ne zaman başladı?',t:'one',o:['Şimdi','1-3 saat önce','Bu sabah','Dün']},
+{id:'yer',q:'Ağrı nerede?',t:'many',o:['Sağ taraf','Sol taraf','Alın','Şakak','Ense','Tüm baş']},
+{id:'bel',q:'Belirtiler',t:'many',o:['Bulantı','Kusma','Işığa hassasiyet','Sese hassasiyet','Kokuya hassasiyet','Baş dönmesi','Aura']},
+{id:'tet',q:'Olası tetikleyiciler',t:'many',o:['Stres','Uykusuzluk','Açlık','Hava değişimi','Kafein','Alkol','Adet dönemi','Parlak ışık','Yorgunluk','Bilmiyorum']},
+{id:'ilac',q:'Ne aldınız?',t:'many',o:['Ağrı kesici','Triptan','Başka ilaç','Hiçbir şey']},
+{id:'fayda',q:'İlaç işe yaradı mı?',t:'one',o:['Evet','Kısmen','Hayır','İlaç almadım']},
+{id:'rahat',q:'Ne rahatlattı?',t:'many',o:['Karanlık oda','Uyku','Soğuk kompres','Su içmek','Hiçbiri']}];
+const UQ=[
+{id:'yat',q:'Dün gece saat kaçta yattınız?',t:'time'},
+{id:'dal',q:'Uykuya dalmanız ne kadar sürdü?',t:'one',o:['15 dk’dan az','15-30 dk','30-60 dk','1 saatten fazla']},
+{id:'uyan',q:'Gece kaç kez uyandınız?',t:'one',o:['0','1','2','3','4+']},
+{id:'neden',q:'Neden uyandınız?',t:'many',o:['Tuvalet','Su içmek','Gürültü','Baş ağrısı','Endişe','Bilmiyorum']},
+{id:'kalk',q:'Sabah saat kaçta kalktınız?',t:'time'},
+{id:'bas',q:'Baş ağrısıyla mı uyandınız?',t:'one',o:['Evet','Hayır']},
+{id:'din',q:'Ne kadar dinlenmiş hissediyorsunuz? (1 hiç, 5 çok)',t:'scale',n:5}];
+const SK={
+a:['Hemen her gün','Haftada en az 2 gün','Haftada en az 1 gün','Ayda en az 1 gün','Hiç'],
+b:['Hiçbir zaman','Zamanın azında','Zamanın bir kısmında','Zamanın çoğunda','Her zaman'],
+c:['Haftada 4 gün veya fazla','Haftada 2-3 gün','Haftada 1 gün veya daha az','Hiç'],
+d:['Hiç uymuyor','Pek uymuyor','Uyuyor','Çok uyuyor'],
+e:['Hiç uymuyor','Ne uyuyor ne uymuyor','Biraz uyuyor','Uyuyor'],
+g:['Evet','Hayır','Bilmiyorum'],
+h:['Hiç','Nadiren','Bazen','Her zaman'],
+i:['Hiç','Ara sıra','Yarı yarıya','Çoğunlukla','Her zaman','Geçerli değil'],
+j:['Evet','Bazen','Hayır'],
+k:['Tanıyabiliyorum','Bazen tanıyabiliyorum','Tanıyamıyorum','Son zamanlarda koklamadım','Hiç koklamadım'],
+m:['Hiç öyle düşünmüyorum','Pek öyle düşünmüyorum','Biraz öyle düşünüyorum','Çok öyle düşünüyorum'],
+n:['Hiç','Nadiren','Bazen','Sık sık','Her zaman']};
+const SV=[
+{id:'Q1',q:'Şu anki çalışma durumunuzu en iyi hangisi anlatıyor? (izinde olanlar dahil; birden fazla işiniz varsa ana işinizi düşünün)',o:['Şirket yöneticisi / yönetim kurulu üyesi (kendi işi hariç)','Kendi işinin sahibi (esnaf, işveren)','Serbest çalışan (freelance)','Çiftçi / hayvancılıkla uğraşan','Aile işletmesinde yardımcı','Kamu görevlisi (memur)','Tam zamanlı çalışan (yönetici pozisyonunda)','Tam zamanlı çalışan (yönetici değil)','Geçici / ajans aracılığıyla çalışan','Sözleşmeli çalışan','Yarı zamanlı çalışan','Yevmiyeli / mevsimlik işçi','Platform üzerinden iş (kurye, sürücü vb.)','Evde parça başı iş (fason)','Çalışan öğrenci','Çalışmayan öğrenci','Emekli (çalışmıyor)','Ev hanımı / ev erkeği','İşsiz']},
+{id:'Q2',q:'Şu anda yaşadığınız yeri en iyi hangisi anlatıyor?',o:['Büyükşehir merkezi','Büyükşehrin çevresi (banliyö)','Küçük şehir veya ilçe merkezi','Küçük şehir veya ilçenin çevresi','Şehre yakın köy veya kırsal alan','Şehre uzak köy veya kırsal alan']},
+{id:'Q3',q:'İşinizin türünü en iyi hangisi anlatıyor?',o:['Çoğunlukla masa başı (büro, bilgisayar)','Çoğunlukla insanlarla konuşmaya dayalı (satış, hizmet)','Çoğunlukla fiziksel iş (üretim, bakım vb.)']},
+{id:'Q4',q:'Sizinle aynı evde yaşayan ve giderleri paylaşan kişiler',num:['Toplam kişi sayısı (kendiniz dahil)','Bunlardan 0-18 yaş arası çocuk sayısı']},
+{id:'Q5',q:'Birlikte yaşadığınız çocuklar (en büyükten başlayarak)'},
+{id:'Q6',q:'Aile durumunuz',qs:[{id:'Q6.1',q:'Medeni durumunuz nedir?',t:'one',o:['Hiç evlenmedim','Evliyim (eşimle aynı evde yaşıyoruz)','Evliyim (eşimden ayrı yaşıyoruz)','Boşanma davası sürüyor','Boşandım','Eşimi kaybettim (dulum)','Resmi nikâh olmadan partnerimle yaşıyorum']},{id:'Q6.2',q:'Şu anki (veya son) evliliğiniz kaçıncı evliliğiniz?',t:'one',o:['Birinci','İkinci','Üçüncü veya daha fazla','Hiç evlenmedim']}]},
+{id:'Q7',q:'Sağlık sigortası durumunuz hangisi?',o:['SGK – çalışan (4/a)','SGK – kendi nam ve hesabına (4/b, Bağ-Kur)','SGK – kamu görevlisi (4/c)','Genel Sağlık Sigortası (primini kendim ödüyorum)','Genel Sağlık Sigortası (primimi devlet ödüyor)','Özel sağlık sigortası','Sigortam yok','Diğer']},
+{id:'Q8',mo:1,q:'Son 1 ay içinde, sağlıklı olduğunuz normal zamanlara kıyasla işinizde aşağıdakiler ne sıklıkla oldu? (Çalışmıyorsanız bu bölümü geçebilirsiniz.)',sc:'a',it:['İnsanlarla uyumlu davranamadım','İşi özenle yapamadım','Düşüncelerimi toparlayamadım','İşimde aksamalar arttı','İşlerin yolunda gitmediğini hissettim','Sakin karar veremedim','İşe istekli ve girişken yaklaşamadım']},
+{id:'Q9',mo:1,q:'Son 30 gün içinde zamanın ne kadarında kendinizi aşağıdaki gibi hissettiniz?',sc:'b',it:['Gergin','Umutsuz','Huzursuz veya yerinde duramayan','O kadar çökkün ki hiçbir şeyin neşelendiremediği','Her şeyin bir çaba gerektirdiği','Değersiz']},
+{id:'Q10',mo:1,q:'Son 1 ayda haftada kaç gün aşağıdaki şekilde dışarı çıktınız?',sc:'c',it:['Kısa çıkışlar (çöp atmak, bakkala gitmek vb.)','Evden toplam 1 saat veya daha uzun süren çıkışlar (iş, okul, alışveriş dahil)']},
+{id:'Q11',mo:1,q:'Son 1 aydaki dışarı çıkma durumunuzu düşünün. Her ifade size ne kadar uyuyor?',sc:'d',it:['Dışarı çıkma durumum beni sıkıntıya sokuyor veya üzüyor','Dışarı çıkma durumum nedeniyle kendimi yalnız veya dışlanmış hissediyorum','Dışarı çıkma durumum yüzünden ailem veya çevremdekiler benim için endişeleniyor','Ailem veya çevremdekiler dışarı çıkma durumum hakkında benim için birine danıştı','Dışarı çıkma durumum okulumu, işimi veya iş aramamı engelliyor','Dışarı çıkma durumum aile üyeleriyle aramda sorun yaratıyor','Dışarı çıkma durumum arkadaşlıklarımda ve sosyal ilişkilerimde sorun yaratıyor']},
+{id:'Q12',q:'Haftada 3 gün veya daha az, evden toplam 1 saat veya daha uzun süreyle çıkma durumu ne kadardır sürüyor? (Haftada 4 gün veya daha fazla çıkıyorsanız "Hiç" seçin.)',o:['Hiç','3 aydan kısa','3 ay ile 6 ay arası','6 aydan uzun']},
+{id:'Q13',mo:1,q:'Son 1 ayı düşünün. Aşağıdaki ifadeler size ne kadar uyuyor?',sc:'e',it:['Günün çoğunu evde geçiriyorum','Yüz yüze neredeyse hiç kimseyle görüşmüyorum','Önemli konuları konuşabileceğim hiç kimse yok','Bir gruba uyum sağlamakta zorlanırım','İnsanlarla görüşmekten hoşlanmıyorum','Önemli sorunları konuşabileceğim çok kişi yok','İnsanlarla konuşmaktan kaçınıyorum','Başkalarıyla nadiren iletişim kuruyorum','Hayatımda gerçekten önemli biri yok']},
+{id:'Q14',mo:1,q:'Son 1 ayı düşünün. Aşağıdaki ifadeler size ne kadar uyuyor?',sc:'d',it:['Hayat zorluklarla dolu','Yaşamak bana zor geliyor','Kendime güvenim yok','Toplumun kurallarına uyum sağlamakta zorlanırım','Çok endişelenirim','Çabuk sinirlenirim']},
+{id:'Q15',q:'Afetlere (deprem, sel, yangın vb.) hazırlığınızla ilgili soruları yanıtlayın.',sc:'g',it:['Mobilyaları depremde devrilmeyecek şekilde sabitlediniz mi?','Afet durumu için yiyecek, su vb. stokladınız mı?','Acil durum (afet) çantası hazırladınız mı?','Afet anında aile üyeleriyle birbirinizin güvende olduğunu öğrenmek için bir yönteminiz var mı?','Evdeyken afet olursa toplanma alanını ve ulaşım yolunu biliyor musunuz?','Evden uzaktayken afet olursa toplanma alanını ve ulaşım yolunu biliyor musunuz?','Oturduğunuz binanın depreme dayanıklılığı bir uzman tarafından incelendi mi?']},
+{id:'Q16',q:'Aşağıdaki her madde için ne sıklıkla böyle hissettiğinizi belirtin.',sc:'h',it:['İnsanlarla yakın ilişkiniz veya arkadaşlığınız olmadığını hissediyor musunuz?','Dışlanmış hissediyor musunuz?','Başkalarından yalıtılmış hissediyor musunuz?','Kâğıttaki küçük yazıları (gazete, dergi, kitap) okumakta zorlanıyorum','Telefon ekranındaki yazıları okumakta zorlanıyorum','Bilgisayar veya tablet ekranındaki yazıları okumakta zorlanıyorum','Loş yerlerde görmekte zorlanıyorum','Çok aydınlık yerlerde görmekte zorlanıyorum','Uzun süre okumakta zorlanıyorum','Uzaktan yakına bakarken gözümü odaklamakta zorlanıyorum']},
+{id:'Q17',mo:1,q:'Son 1 hafta içinde göz belirtilerinizin ne sıklıkta olduğunu işaretleyin.',sc:'i',strip:5,na:{5:'Okumuyorum',6:'Gece araç kullanmıyorum',7:'Kullanmıyorum',8:'Televizyon izlemiyorum',9:'Bu ortamda bulunmadım',10:'Bu ortamda bulunmadım',11:'Bu ortamda bulunmadım'},it:['Göz kamaşması','Gözde kumlanma veya batma hissi','Göz ağrısı','Bulanık görme','Görmekte zorlanma','Göz belirtileri nedeniyle okumanın kısıtlanması','Göz belirtileri nedeniyle gece araç kullanmanın kısıtlanması','Göz belirtileri nedeniyle bilgisayar, telefon, tablet ve ATM kullanımının kısıtlanması','Göz belirtileri nedeniyle televizyon izlemenin kısıtlanması','Rüzgârlı havada göz rahatsızlığı','Nemi düşük (kuru) ortamlarda göz rahatsızlığı','Klimalı ortamlarda göz rahatsızlığı']},
+{id:'Q18',q:'İşitmenizle ilgili soruları yanıtlayın.',sc:'j',it:['Biriyle ilk tanıştığınızda duymakta zorlanıyor musunuz?','Aile üyeleriyle konuşurken duymakta zorlandığınız için sinirleniyor musunuz?','İş yerinde iş arkadaşlarınızı veya müşterileri duyup anlamakta zorlanıyor musunuz?','Duymakta zorlandığınızda kendinizi engelli hissediyor musunuz?','Arkadaş, akraba veya komşularla konuşurken duymakta zorlanıyor musunuz?','Sinema veya tiyatroda duymakta zorlanıyor musunuz?','Duyma güçlüğünüz yüzünden aile üyeleriyle tartışıyor musunuz?','Televizyon izlerken veya radyo dinlerken duymakta zorlanıyor musunuz?','Duyma güçlüğünüzün özel hayatınızı veya sosyal etkinliklerinizi kısıtladığını düşünüyor musunuz?','Akraba veya arkadaşlarla restoranda duymakta zorlanıyor musunuz?']},
+{id:'Q19',mo:1,q:'Son 1 ay içinde aşağıdaki kulak belirtilerini ne kadar yaşadınız? 0 = hiç yok, 10 = çok şiddetli.',n:10,z:1,it:['Kulaklarda basınç hissi','Kulak ağrısı','Kulağa su kaçmış gibi tıkanıklık hissi','Soğuk algınlığındaki gibi kulak belirtileri','Kulakta çıtırtı veya patlama sesleri','Kulakta çınlama','Seslerin boğuk gelmesi']},
+{id:'Q20',q:'Aşağıdaki 20 kokunun her biri için size uyan yanıtı seçin.',sc:'k',it:['Pişmiş pilav','Beyaz peynir','Balık','Sirke','Taze ekmek / fırın','Tereyağı','Köri / baharat','Kızarmış sarımsak','Mandalina','Çilek','Çay','Türk kahvesi','Çikolata','Doğalgaz / tüp gaz','Çöp / bozulmuş yemek','Odun / kereste','Ter','Dışkı','Çiçek','Parfüm']},
+{id:'Q21',q:'Psikolojik danışmanlık ve psikoterapiyle ilgili görüşleriniz. Lütfen içtenlikle yanıtlayın. Her ifade size ne kadar uyuyor?',sc:'d',it:['Psikolojik olarak çok sıkıntıda olsaydım önce bir uzmana başvururdum','Bir psikolojik danışmanla sorunlarımı konuşmanın, ruhsal çatışmayı aşmada etkili olacağını düşünmüyorum','Şu an ciddi bir ruhsal çatışma yaşıyor olsam, bunu psikolojik danışmanlıkla çözebileceğime inanırım','Profesyonel yardım almadan çatışmalarıyla kendi başına yüzleşen insanlarda takdir edilecek bir yan olduğunu düşünüyorum','Uzun süre sıkıntı çekseydim bir psikolojik danışmandan yardım alırdım','İleride psikolojik danışmanlık almak isterim','Sorunu olan insanların bunu tek başına değil, bir uzmanla çözmesi daha iyidir','Psikolojik danışmanlığın zamanını ve maliyetini düşününce, benim gibi birine fayda sağlayıp sağlamayacağından emin değilim','İnsanlar sorunlarıyla kendi başlarına uğraşmalı; psikolojik danışmanlık son çare olmalı','Kişisel ve ruhsal sorunlar, birçok şey gibi zamanla kendiliğinden düzelir']},
+{id:'Q22',q:'Çevrenizdeki insanların, psikiyatrik tedavi görmüş kişilere nasıl baktığıyla ilgili görüşünüzü belirtin.',sc:'m',it:['Çoğu insan, geçmişte psikiyatrik tedavi görmüş birini yakın arkadaş olarak memnuniyetle kabul eder','Çoğu insan, psikiyatri servisinde yatmış birinin de ortalama bir insan kadar zeki olduğunu düşünür','Çoğu insan, geçmişte psikiyatrik tedavi görmüş birinin de ortalama bir insan kadar güvenilir olduğunu düşünür','Çoğu insan, tamamen iyileşmiş eski bir psikiyatri hastasının küçük çocuklara öğretmenlik yapmasını kabul eder','Çoğu insan, psikiyatri hastanesinde yatmayı kişisel bir başarısızlık olarak görür','Çoğu insan, uzun süredir iyi olsa bile eski bir psikiyatri hastasına çocuk bakımı işini vermez','Çoğu insan, psikiyatri hastanesinde yatmış birini küçümser','Çoğu işveren, işe uygunsa eski bir psikiyatri hastasını işe alır','Çoğu işveren, eski psikiyatri hastalarını işe almaktan kaçınır ve başka adayları seçer','Çevremdeki çoğu insan, eski bir psikiyatri hastasına herkese davrandığı gibi davranır','Çoğu genç, psikiyatri hastanesinde yatmış biriyle ilişki yaşamak istemez','Çoğu insan, birinin psikiyatri hastanesinde yattığını öğrenince onun fikirlerini artık eskisi kadar ciddiye almaz']},
+{id:'Q23',q:'Dişleriniz',qs:[{id:'Q23.1',q:'Doğal diş sayınız (kaplamalı veya kuronlu dişler dahil, implant hariç)',t:'num',ph:'0-32'},{id:'Q23.2',q:'İmplant sayınız',t:'num',ph:'0'},{id:'Q23.3',q:'Takma diş (protez) kullanıyor musunuz?',t:'one',o:['Hayır','Evet, üst çene','Evet, alt çene','Evet, her ikisi']}]},
+{id:'Q24',mo:1,q:'Diş, ağız, protez veya kaplama sorunları nedeniyle son 1 ayda aşağıdakileri ne sıklıkla yaşadınız?',sc:'n',it:['Kelimeleri telaffuz etmekte zorlandım','Tat alma duyum azaldı','Ağzımda şiddetli ağrı hissettim','Yemek yerken rahatsızlık hissettim','Toplum içinde kendimi rahatsız hissettim','Gergin veya stresli hissettim','Yeterince yemek yiyemedim','Yemeğime ara vermek zorunda kaldım','Rahatlayamadım','Biraz da olsa utandım','Başkalarına karşı biraz da olsa sinirlendim','Ev işlerim veya işim aksadı','Günlük yaşamımdan memnun olmadım']}];
+const PL=[['Okyanus','#1da6d6','#5b3df5'],['Orman','#1fae78','#2a6fe0'],['Gün batımı','#f0782a','#e0386b'],['Lavanta','#9a62f0','#d94ac0'],['Zümrüt','#10a58a','#2b8f45']];
+let sq=[],pi=0,pe=0,wxE=0,lm=0,cand=null,rs=[],ge=0,aq='';
+const R=(l,v)=>`<div class="row"><span>${l}</span><b>${v}</b></div>`;
+const wc=c=>c==0?'Açık':c<4?'Parçalı bulutlu':c<50?'Sisli':c<60?'Çiseleme':c<70?'Yağmurlu':c<80?'Karlı':c<90?'Sağanak':'Gök gürültülü';
+function applyP(){const p=PL[S.pal]||PL[0],st=document.documentElement.style;st.setProperty('--ac',p[1]);st.setProperty('--ac2',p[2])}
+async function wx(){const L=S.loc;if(!L)return;
+ try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${L[0]}&longitude=${L[1]}&current=temperature_2m,apparent_temperature,relative_humidity_2m,pressure_msl,surface_pressure,wind_speed_10m,wind_gusts_10m,wind_direction_10m,precipitation,cloud_cover,weather_code,is_day&hourly=pressure_msl&past_hours=3&forecast_hours=1&timezone=auto`);
+ const j=await r.json(),c=j.current,h=(j.hourly||{}).pressure_msl||[];
+ S.weather.push({ts:Date.now(),sehir:L[2],...c,dp3:h.length&&c.pressure_msl!=null?+(c.pressure_msl-h[0]).toFixed(1):null});
+ if(S.weather.length>1000)S.weather.shift();save();wxE=0}catch(e){wxE=1}
+ if(tab==='home')render()}
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+async function geo(q){try{const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=tr&accept-language=tr&q='+encodeURIComponent(q));const j=await r.json();rs=j.map(x=>({lat:+x.lat,lon:+x.lon,src:'adres',label:x.display_name.split(',').slice(0,3).join(',').trim()}));ge=rs.length?0:2}catch(e){rs=[];ge=1}render()}
+const mapH=c=>{const a=c.lat,o=c.lon,f=v=>v.toFixed(4);return `<iframe title="Harita" loading="lazy" style="width:100%;height:14rem;border:0;border-radius:1rem" src="https://www.openstreetmap.org/export/embed.html?bbox=${f(o-.02)},${f(a-.012)},${f(o+.02)},${f(a+.012)}&layer=mapnik&marker=${f(a)},${f(o)}"></iframe><p class="mut"><a style="color:var(--act)" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${f(a)}&mlon=${f(o)}#map=15/${f(a)}/${f(o)}">Haritada aç</a></p>`};
+const wxCard=()=>{const w=S.weather[S.weather.length-1];
+ if(cand)return `<section class="card"><h3>Konumunuz doğru mu?</h3><p class="mut">${esc(cand.label)}</p>${mapH(cand)}<button class="cta" data-ok="1">Evet, burası</button><button class="ghost" data-no="1">Değiştir</button></section>`;
+ if(!S.loc&&lm)return `<section class="card"><h3>Ev adresiniz</h3><p class="mut">Mahalle, ilçe ve il yazmanız yeterli. Tam adresiniz saklanmaz; yalnızca yaklaşık konum kaydedilir.</p><input class="in" id="aq" placeholder="örn. Moda Mah., Kadıköy, İstanbul" value="${esc(aq)}"><button class="cta" data-sr="1" style="margin-top:.8rem">Adresi ara</button>${ge==1?'<p class="mut">Adres aranamadı. İnternet bağlantınızı kontrol edin.</p>':ge==2?'<p class="mut">Sonuç bulunamadı. Daha ayrıntılı yazın.</p>':''}<div class="chips" style="flex-direction:column">${rs.map((x,i)=>`<button class="chip" style="border-radius:1rem;text-align:left" data-pick="${i}">${esc(x.label)}</button>`).join('')}</div><button class="ghost" data-geo="1" style="margin-top:.8rem">Telefon konumunu dene</button></section>`;
+ if(!S.loc)return `<section class="card"><h3>Hava durumu kaydı</h3><p class="mut">Hava basıncı ve sıcaklık değişimleri migreni tetikleyebilir. Uygulamayı her açtığınızda hava durumu kaydedilir. Bunun için konumunuz gerekir.</p><button class="cta" data-geo="1">Telefon konumumu kullan</button><button class="ghost" data-addr="1">Ev adresimi yazayım</button></section>`;
+ return `<section class="card"><h3>Hava durumu: ${esc(S.loc[2])}</h3>${w?R('Durum',wc(w.weather_code))+R('Sıcaklık',w.temperature_2m+' °C (hissedilen '+w.apparent_temperature+')')+R('Basınç',w.pressure_msl+' hPa'+(w.dp3!=null?' ('+(w.dp3>0?'+':'')+w.dp3+' / 3 sa)':''))+R('Nem','%'+w.relative_humidity_2m)+R('Rüzgâr',w.wind_speed_10m+' km/sa'):`<p class="mut">${wxE?'Hava verisi alınamadı.':'Yükleniyor…'}</p>`}<button class="ghost" data-loc="1" style="margin-top:.8rem">Konumu değiştir</button></section>`};
+function svQs(s){const q=[];
+ if(s.num)s.num.forEach((t,i)=>q.push({id:s.id+'.'+(i+1),q:t,t:'num',ph:'0'}));
+ else if(s.qs)q.push(...s.qs);
+ else if(s.id==='Q5'){const c=Math.min(12,+dr['Q4.2']||0);for(let i=1;i<=c;i++)q.push({id:'Q5.a'+i,q:i+'. çocuğun yaşı',t:'num',ph:'0'},{id:'Q5.g'+i,q:i+'. çocuğun cinsiyeti',t:'one',o:['Erkek','Kız']})}
+ else if(s.it)s.it.forEach((t,i)=>{let o=SK[s.sc]||[];if(i<(s.strip||0))o=o.slice(0,-1);else if(s.na&&s.na[i])o=[...o.slice(0,-1),s.na[i]];q.push({id:s.id+'.'+(i+1),q:t,t:s.n?'scale':'one',n:s.n,z:s.z,o})});
+ else q.push({id:s.id,q:s.q,t:'one',o:s.o});
+ if(s.it||s.id==='Q23')q.push({id:s.id+'.not',q:'Eklemek istediğiniz bir şey var mı? Yoksa boş bırakın.',t:'text'});
+ return q}
+const due=()=>SV.map((s,i)=>i).filter(i=>SV[i].mo&&(!S.st[SV[i].id]||Date.now()-S.st[SV[i].id]>2592e6));
+const anket=()=>{const s=SV[sq[pi]],qs=svQs(s),m=!!(s.it||s.num||s.qs||s.id==='Q5'),n=sq.length;
+ return `<div class="bar"><i style="width:${(pi+1)/n*100}%"></i></div><h2>Bölüm ${pi+1} / ${n}</h2>${m?`<p class="mut">${s.q}</p>`:''}${qs.length?form(qs,dr):'<section class="card"><p class="mut">Çocuk sayısı girmediğiniz için bu bölümü geçebilirsiniz.</p></section>'}<button class="cta" data-nx="1">${pi<n-1?'Kaydet ve ilerle':'Bitir'}</button><button class="ghost" data-pv="1">Geri</button>`};
+const prof=()=>`<h2>Profil</h2><section class="card">${PQ.map(x=>{const v=S.profile[x.id];return R(x.q,Array.isArray(v)?v.join(', ')||'–':v||'–')}).join('')}</section><button class="cta" data-pe="1">Düzenle</button>`;
+const today=()=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const cp=o=>JSON.parse(JSON.stringify(o));
+function load(){document.documentElement.dataset.theme='dark';try{const v=localStorage.getItem(K);if(v)S=Object.assign(S,JSON.parse(v));const z=localStorage.getItem('aura-z2');if(z!==null)zi=Math.min(7,Math.max(0,+z));const t=localStorage.getItem('aura-t');if(t)document.documentElement.dataset.theme=t}catch(e){}}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function zoom(d){zi=Math.min(7,Math.max(0,zi+d));applyZ();try{localStorage.setItem('aura-z2',zi)}catch(e){}}
+function applyZ(){document.documentElement.style.fontSize=16*Zs[zi]/100+'px';$('#zv').textContent='%'+Zs[zi]}
+function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
+function form(qs,d){return qs.map(x=>{let h;
+ if(x.t==='num')h=`<input class="in" type="number" inputmode="numeric" min="0" max="120" placeholder="${x.ph||''}" value="${d[x.id]??''}" data-i="${x.id}">`;
+ else if(x.t==='time')h=`<input class="in" type="time" value="${d[x.id]||''}" data-i="${x.id}">`;
+ else if(x.t==='text')h=`<textarea class="in" rows="3" data-i="${x.id}">${(d[x.id]||'').replace(/</g,'&lt;')}</textarea>`;
+ else if(x.t==='scale'){const a=x.z?0:1;h=Array.from({length:x.n-a+1},(_,i)=>`<button class="chip${d[x.id]==i+a&&d[x.id]!==undefined?' on':''}" data-i="${x.id}" data-v="${i+a}">${i+a}</button>`).join('')}
+ else{const m=x.t==='many';h=x.o.map(o=>`<button class="chip${(m?(d[x.id]||[]).includes(o):d[x.id]===o)?' on':''}" data-i="${x.id}" data-v="${o}" data-m="${m?1:0}">${o}</button>`).join('')}
+ return `<section class="card"><h3>${x.q}</h3><div class="chips">${h}</div></section>`}).join('')}
+const page=(t,s,qs,b,k)=>`<h2>${t}</h2><p class="mut">${s}</p>${form(qs,dr)}<button class="cta" data-save="${k}">${b}</button>`;
+function home(){
+ const a=S.attacks.length?Math.floor((Date.now()-Math.max(...S.attacks.map(x=>x.ts)))/864e5):null;
+ const ps=S.sleep.some(x=>x.day===today()),na=SV.filter(x=>S.st[x.id]).length,dn=due().length;
+ const pp=Math.round(PQ.filter(q=>{const v=S.profile[q.id];return Array.isArray(v)?v.length:(v!==undefined&&v!=='')}).length/PQ.length*100);
+ return `<div class="hero"><button class="orb" data-go="atak" aria-label="Atak kaydı başlat">Atak<br>Başlat</button><p class="mut">Tek dokunuşla kayda başlayın</p></div>${wxCard()}
+ <section class="card"><h3>Atak içermeyen gün serisi</h3><div class="big">${a===null?'–':a}</div><p class="mut" style="margin:.4rem 0 0">${a===null?'Henüz atak kaydı yok.':'gündür yeni atak kaydı yok.'}</p></section>
+ <section class="card"><h3>Dünkü uykunuz</h3><p class="mut">${ps?'Bugün için girildi ✓':'Henüz girilmedi. Yaklaşık 1 dakika sürer.'}</p><button class="ghost" data-go="uyku">${ps?'Düzenle':'Uyku girişi yap'}</button></section>
+ <section class="card"><h3>Profiliniz %${pp} tamam</h3><div class="bar"><i style="width:${pp}%"></i></div><button class="ghost" data-go="profil">Profili tamamla</button></section>
+ <section class="card"><h3>Kapsamlı anket</h3><div class="bar"><i style="width:${Math.round(na/SV.length*100)}%"></i></div><p class="mut">${na>=SV.length?'Tüm bölümler tamam ✓':na+' / '+SV.length+' bölüm tamam'}. Her soru isteğe bağlıdır.</p><button class="ghost" data-go="anket" data-mode="${na>=SV.length?'all':'new'}">${na>=SV.length?'Tüm yanıtları düzenle':na?'Ankete devam et':'Ankete başla'}</button></section>
+ ${na?`<section class="card"><h3>Aylık yenileme</h3><p class="mut">${dn?dn+' bölümün yenilenme zamanı geldi (30 günde bir sorulur).':'Bu ay için bekleyen bölüm yok ✓'}</p>${dn?'<button class="ghost" data-go="anket" data-mode="due">Şimdi yenile</button>':''}</section>`:''}
+ <section class="card"><h3>Renk seçin</h3><div class="chips">${PL.map((p,i)=>`<button class="dot${S.pal===i?' on':''}" data-pal="${i}" aria-label="${p[0]}" style="background:linear-gradient(135deg,${p[1]},${p[2]})"></button>`).join('')}</div></section>`}
+function rapor(){
+ const A=S.attacks,U=S.sleep,n30=A.filter(x=>Date.now()-x.ts<2592e6).length;
+ const avg=(r,k)=>{const v=r.map(x=>+x[k]).filter(Boolean);return v.length?(v.reduce((a,b)=>a+b)/v.length).toFixed(1):'–'};
+ const top=k=>{const c={};A.forEach(x=>(x[k]||[]).forEach(o=>c[o]=(c[o]||0)+1));return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([o,n])=>o+' ('+n+')').join(', ')||'–'};
+ const w=U.map(x=>parseInt(x.uyan)).filter(v=>!isNaN(v)),wa=w.length?(w.reduce((a,b)=>a+b)/w.length).toFixed(1):'–';
+ const r=(l,v)=>`<div class="row"><span>${l}</span><b>${v}</b></div>`;
+ return `<h2>Raporum</h2><p class="mut">Doktorunuzla paylaşabileceğiniz özet.</p>
+ <section class="card"><h3>Atak özeti</h3>${r('Toplam atak',A.length)}${r('Son 30 gün',n30)}${r('Ortalama şiddet',avg(A,'siddet'))}${r('En sık tetikleyiciler',top('tet'))}${r('En sık belirtiler',top('bel'))}</section>
+ <section class="card"><h3>Uyku özeti</h3>${r('Kayıtlı gün',U.length)}${r('Ort. dinlenmişlik (1-5)',avg(U,'din'))}${r('Ort. gece uyanma',wa)}</section>
+ <section class="card"><h3>Hava ve anket</h3>${r('Hava kaydı sayısı',S.weather.length)}${r('Atakta ort. basınç değişimi (3 sa)',(()=>{const v=A.map(x=>x.w?x.w.dp3:null).filter(v=>v!=null);return v.length?(v.reduce((a,b)=>a+b)/v.length).toFixed(1)+' hPa':'–'})())}${r('Anket yanıtı',Object.keys(S.survey).length)}</section>
+ <button class="cta" data-print="1">Yazdır veya PDF yap</button><button class="ghost" data-wipe="1">Tüm verilerimi sil</button>
+ <p class="mut">Verileriniz yalnızca bu cihazda saklanır. Aura tanı koymaz ve tıbbi tavsiye yerine geçmez.</p>`}
+function render(){
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab));
+ $('#view').innerHTML=tab==='home'?home():tab==='atak'?page('Atak kaydı','Her soru isteğe bağlı. Bildiklerinizi işaretleyin, gerisini atlayın.',AQ,'Kaydı tamamla','atak'):tab==='uyku'?page('Uyku girişi','Önceki cevaplarınız hazır geldi. Değişenleri güncelleyin.',UQ,'Uykuyu kaydet','uyku'):tab==='profil'?(S.profile.ts&&!pe?prof():page(S.profile.ts?'Profili düzenle':'Hoş geldiniz','Bu bilgiler yalnızca bir kez sorulur; sonra Düzenle ile değiştirebilirsiniz.',PQ,'Profili kaydet','profil')+(pe?'<button class="ghost" data-go="profil">Vazgeç</button>':'')):tab==='anket'?anket():rapor()}
+function go(t,md){tab=t;dr={};pe=0;
+ if(t==='profil')dr=cp(S.profile);
+ if(t==='anket'){dr=cp(S.survey);const A=SV.map((_,i)=>i);sq=md==='due'?due():md==='all'?A:A.filter(i=>!S.st[SV[i].id]);pi=0;if(!sq.length){tab='home';toast('Bekleyen bölüm yok')}}
+ if(t==='uyku'){const l=S.sleep.find(x=>x.day===today())||S.sleep[S.sleep.length-1];if(l){dr=cp(l);delete dr.ts;delete dr.day}}
+ render();scrollTo(0,0)}
+function doSave(k){const e={...dr,ts:Date.now()};
+ if(k==='profil'){S.profile=e;pe=0}
+ else if(k==='atak')S.attacks.push({...e,w:S.weather[S.weather.length-1]||null});
+ else{S.sleep=S.sleep.filter(x=>x.day!==today());S.sleep.push({...e,day:today()})}
+ save();go('home');toast('Kaydedildi ✓')}
+document.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
+ if(t.classList.contains('chip')){const id=d.i,v=d.v;
+  if(d.m==='1'){const a=dr[id]=dr[id]||[],i=a.indexOf(v);i<0?a.push(v):a.splice(i,1);t.classList.toggle('on')}
+  else if(dr[id]===v){delete dr[id];t.classList.remove('on')}
+  else{dr[id]=v;t.parentNode.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));t.classList.add('on')}}
+ else if(d.geo){if(!navigator.geolocation){lm=1;toast('Bu cihaz konum vermiyor. Ev adresinizi yazın.');render()}
+  else navigator.geolocation.getCurrentPosition(p=>{cand={lat:+p.coords.latitude.toFixed(4),lon:+p.coords.longitude.toFixed(4),src:'gps',label:'Telefon konumu'};render()},()=>{lm=1;toast('Konum izni verilmedi veya alınamadı. Ev adresinizi yazın.');render()},{timeout:10000})}
+ else if(d.addr){lm=1;render()}
+ else if(d.sr){if(aq.trim())geo(aq.trim())}
+ else if(d.pick){cand=rs[+d.pick];rs=[];render()}
+ else if(d.ok){S.loc=[+cand.lat.toFixed(2),+cand.lon.toFixed(2),cand.src==='gps'?'Telefon konumu':'Ev konumu'];cand=null;lm=0;save();wx();render()}
+ else if(d.no){cand=null;render()}
+ else if(d.loc){S.loc=null;cand=null;lm=0;save();render()}
+ else if(d.pal){S.pal=+d.pal;applyP();save();render()}
+ else if(d.nx){const c=SV[sq[pi]];S.survey=cp(dr);S.st[c.id]=Date.now();
+  if(c.mo){const a={};svQs(c).forEach(x=>{if(dr[x.id]!==undefined)a[x.id]=dr[x.id]});S.hist.push({sec:c.id,ts:Date.now(),a});if(S.hist.length>300)S.hist.shift()}
+  if(pi<sq.length-1){pi++;save();render();scrollTo(0,0)}else{save();go('home');toast('Tamamlandı ✓')}}
+ else if(d.pv){S.survey=cp(dr);pi=Math.max(0,pi-1);save();render();scrollTo(0,0)}
+ else if(d.pe){pe=1;dr=cp(S.profile);render();scrollTo(0,0)}
+ else if(d.t)go(d.t);
+ else if(d.go)go(d.go,d.mode);
+ else if(d.save)doSave(d.save);
+ else if(d.print){try{print()}catch(_){}}
+ else if(d.wipe){if(d.arm){S=fresh();applyP();save();go('home');toast('Veriler silindi')}else{t.dataset.arm=1;t.textContent='Emin misiniz? Silmek için tekrar dokunun'}}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='aq'&&aq.trim())geo(aq.trim())});
+document.addEventListener('input',e=>{const t=e.target;if(t.id==='aq')aq=t.value;if(t.dataset.i&&t.classList.contains('in'))dr[t.dataset.i]=t.value});
+$('#zm').onclick=()=>zoom(-1);$('#zp').onclick=()=>zoom(1);
+const SUN='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffb020" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="#ffb020"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>',MOON='<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+const setT=n=>{document.documentElement.dataset.theme=n;const b=$('#th');b.innerHTML=n==='dark'?SUN:MOON;b.style.background=n==='dark'?'':'#16224a';b.setAttribute('aria-label',n==='dark'?'Açık temaya geç':'Koyu temaya geç')};
+$('#th').onclick=()=>{const n=document.documentElement.dataset.theme==='dark'?'light':'dark';setT(n);try{localStorage.setItem('aura-t',n)}catch(e){}};
+load();setT(document.documentElement.dataset.theme);applyZ();applyP();if(!S.profile.ts)tab='profil';render();wx();
+</script>
+</body>
+</html>
